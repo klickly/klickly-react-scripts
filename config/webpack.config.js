@@ -316,7 +316,8 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: {
                   extends: [
-                      require.resolve('eslint-config-react-app')
+                      require.resolve('eslint-config-react-app'),
+                      require.resolve('eslint-config-klickly')
                   ],
                   parserOptions: {
                     ecmaFeatures: {
