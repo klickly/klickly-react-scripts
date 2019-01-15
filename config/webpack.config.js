@@ -315,7 +315,10 @@ module.exports = function(webpackEnv) {
                 eslintPath: require.resolve('eslint'),
                 // @remove-on-eject-begin
                 baseConfig: {
-                  extends: [require.resolve('eslint-config-klickly')],
+                  extends: [
+                      require.resolve('eslint-config-react-app'),
+                      require.resolve('eslint-config-klickly')
+                  ],
                 },
                 ignore: false,
                 useEslintrc: false,
