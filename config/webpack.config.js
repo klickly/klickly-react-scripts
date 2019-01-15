@@ -48,6 +48,7 @@ const useTypeScript = fs.existsSync(paths.appTsConfig);
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
+const lessRegex = /\.(less)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // This is the production and development configuration.
@@ -76,7 +77,7 @@ module.exports = function(webpackEnv) {
   const env = getClientEnvironment(publicUrl);
 
   // common function to get style loaders
-  const getStyleLoaders = (cssOptions, preProcessor) => {
+  const getStyleLoaders = (cssOptions, preProcessor, options = {}) => {
     const loaders = [
       isEnvDevelopment && require.resolve('style-loader'),
       isEnvProduction && {
@@ -117,6 +118,7 @@ module.exports = function(webpackEnv) {
         loader: require.resolve(preProcessor),
         options: {
           sourceMap: isEnvProduction && shouldUseSourceMap,
+          ...options
         },
       });
     }
@@ -381,6 +383,10 @@ module.exports = function(webpackEnv) {
                         },
                       },
                     },
+                    "@babel/plugin-proposal-decorators",
+                    {
+                      "legacy": true
+                    }
                   ],
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
@@ -459,6 +465,17 @@ module.exports = function(webpackEnv) {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               }),
+            },
+            {
+              test: lessRegex,
+              loader: getStyleLoaders(
+                  {
+                    importLoaders: 1,
+                    sourceMap: shouldUseSourceMap,
+                  },
+                  'less-loader',
+                  { javascriptEnabled: true }
+              )
             },
             // Opt-in support for SASS (using .scss or .sass extensions).
             // By default we support SASS Modules with the
