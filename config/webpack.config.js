@@ -133,7 +133,7 @@ module.exports = function(webpackEnv) {
       ? shouldUseSourceMap
         ? 'source-map'
         : false
-      : isEnvDevelopment && 'eval-source-map',
+      : isEnvDevelopment && 'cheap-module-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
     entry: [
@@ -315,7 +315,7 @@ module.exports = function(webpackEnv) {
                 eslintPath: require.resolve('eslint'),
                 // @remove-on-eject-begin
                 baseConfig: {
-                  extends: [require.resolve('eslint-config-react-app')],
+                  extends: [require.resolve('eslint-config-klickly')],
                 },
                 ignore: false,
                 useEslintrc: false,
@@ -379,7 +379,8 @@ module.exports = function(webpackEnv) {
                     {
                       loaderMap: {
                         svg: {
-                          ReactComponent: '@svgr/webpack?-svgo![path]',
+                          ReactComponent:
+                            '@svgr/webpack?-prettier,-svgo![path]',
                         },
                       },
                     },
