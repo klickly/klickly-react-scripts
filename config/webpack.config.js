@@ -316,8 +316,7 @@ module.exports = function(webpackEnv) {
                 // @remove-on-eject-begin
                 baseConfig: {
                   extends: [
-                      require.resolve('eslint-config-react-app'),
-                      require.resolve('eslint-config-klickly')
+                      require.resolve('eslint-config-react-app')
                   ],
                   parserOptions: {
                     ecmaFeatures: {
@@ -476,7 +475,7 @@ module.exports = function(webpackEnv) {
               loader: getStyleLoaders(
                   {
                     importLoaders: 1,
-                    sourceMap: shouldUseSourceMap,
+                    sourceMap: isEnvProduction && shouldUseSourceMap,
                   },
                   'less-loader',
                   { javascriptEnabled: true }
