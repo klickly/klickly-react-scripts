@@ -319,6 +319,11 @@ module.exports = function(webpackEnv) {
                       require.resolve('eslint-config-react-app'),
                       require.resolve('eslint-config-klickly')
                   ],
+                  parserOptions: {
+                    ecmaFeatures: {
+                      legacyDecorators: true
+                    }
+                  }
                 },
                 ignore: false,
                 useEslintrc: false,
@@ -356,8 +361,8 @@ module.exports = function(webpackEnv) {
                   'babel-preset-react-app/webpack-overrides'
                 ),
                 // @remove-on-eject-begin
-                babelrc: false,
-                configFile: false,
+                babelrc: true,
+                configFile: true,
                 presets: [require.resolve('babel-preset-react-app')],
                 // Make sure we have a unique cache identifier, erring on the
                 // side of caution.
@@ -386,10 +391,6 @@ module.exports = function(webpackEnv) {
                             '@svgr/webpack?-prettier,-svgo![path]',
                         },
                       },
-                    },
-                    "@babel/plugin-proposal-decorators",
-                    {
-                      "legacy": true
                     }
                   ],
                 ],
