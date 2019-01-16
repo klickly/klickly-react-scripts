@@ -91,7 +91,7 @@ module.exports = function(webpackEnv) {
         loader: require.resolve('css-loader'),
         options: cssOptions,
       },
-      {
+      preProcessor !== 'less-loader' && {
         // Options for PostCSS as we reference these options twice
         // Adds vendor prefixing based on your specified browser support in
         // package.json
@@ -377,7 +377,7 @@ module.exports = function(webpackEnv) {
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
                     'react-dev-utils',
-                    'react-scripts',
+                    'klickly-react-scripts',
                   ]
                 ),
                 // @remove-on-eject-end
@@ -429,7 +429,7 @@ module.exports = function(webpackEnv) {
                     'babel-plugin-named-asset-import',
                     'babel-preset-react-app',
                     'react-dev-utils',
-                    'react-scripts',
+                    'klickly-react-scripts',
                   ]
                 ),
                 // @remove-on-eject-end
