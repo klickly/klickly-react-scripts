@@ -50,14 +50,13 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .join(path.delimiter);
 
 const MAIN_PACKAGE_FILE = require(resolveApp('package.json'));
-const { injectedEnvVariables: REACT_APP_INJECT = [] } = MAIN_PACKAGE_FILE;
+const { injectedEnvVariables: REACT_APP_INJECT = {} } = MAIN_PACKAGE_FILE;
 
 function getClientEnvironment(publicUrl) {
-  const raw = Object.keys(process.env)
-    .filter(key => REACT_APP_INJECT.indexOf(key) !== -1)
+  const raw = Object.keys(REACT_APP_INJECT)
     .reduce(
       (env, key) => {
-        env[key] = process.env[key];
+        env[key] = process.env[key] || REACT_APP_INJECT[key];
         return env;
       },
       {
