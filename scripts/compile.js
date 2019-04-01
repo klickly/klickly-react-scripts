@@ -20,6 +20,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const safePostCssParser = require('postcss-safe-parser');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
@@ -64,7 +65,10 @@ const moduleRules = [
             {
                 test: /\.scss$/,
                 use: [
-                    'style-loader',
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                        options: { publicPath: '../../' }
+                    },
                     'css-loader',
                     {
                         loader: 'postcss-loader',
@@ -77,7 +81,8 @@ const moduleRules = [
                 ]
             }, {
                 test: /\.css$/,
-                loader: 'style-loader!css-loader'
+                loader: MiniCssExtractPlugin.loader,
+                options: { publicPath: '../../' }
             }, {
                 test: /\.(jpe?g|png|gif|svg|ico)$/i,
                 loader: 'url-loader',
@@ -142,7 +147,10 @@ const config = {
         ]
     },
     plugins: [
-        new webpack.DefinePlugin(env.stringified)
+        new webpack.DefinePlugin(env.stringified),
+        new MiniCssExtractPlugin({
+            filename: 'static/css/[name].bundle.css',
+        })
     ],
     module: { rules: moduleRules },
     externals: {
