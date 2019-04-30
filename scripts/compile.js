@@ -36,6 +36,15 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
+const MAIN_PACKAGE_FILE = require(resolveApp('package.json'));
+const { externalsDependencies = [] } = MAIN_PACKAGE_FILE;
+const externals = {};
+if (externalsDependencies && externalsDependencies.length) {
+    externalsDependencies.forEach((dep) => {
+        externals[dep] = dep;
+    });
+}
+
 const distPath = resolveApp('build-compile');
 // Process CLI arguments
 const argv = process.argv.slice(2);
@@ -101,18 +110,25 @@ const moduleRules = [
     }
 ];
 
+const libraryTarget = process.env.LIB_TARGET || null;
+
+const output = {
+    filename: '[name].bundle.js',
+    path: distPath,
+    pathinfo: false
+};
+
+if (libraryTarget) {
+    output.libraryTarget = libraryTarget;
+}
+
 const config = {
     mode: 'production',
     bail: true,
     devtool: false,
     resolve: { extensions: [ '.js' ] },
     entry: { 'index': `./${argv[1]}` },
-    output: {
-        filename: '[name].bundle.js',
-        path: distPath,
-        libraryTarget: 'commonjs2',
-        pathinfo: false
-    },
+    output,
     optimization: {
         minimize: true,
         minimizer: [
@@ -153,17 +169,7 @@ const config = {
         })
     ],
     module: { rules: moduleRules },
-    externals: {
-        'react': 'react',
-        'axios': 'axios',
-        'classnames': 'classnames',
-        'lodash': 'lodash',
-        'mobx': 'mobx',
-        'mobx-react': 'mobx-react',
-        'react-dom': 'react-dom',
-        'react-slick': 'react-slick',
-        'slick-carousel': 'slick-carousel'
-    }
+    externals
 };
 
 measureFileSizesBeforeBuild(distPath)
