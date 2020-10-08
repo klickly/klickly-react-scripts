@@ -76,6 +76,7 @@ module.exports = (resolve, rootDir, isEjecting) => {
     'moduleNameMapper',
     'resetMocks',
     'resetModules',
+    'restoreMocks',
     'snapshotSerializers',
     'transform',
     'transformIgnorePatterns',
