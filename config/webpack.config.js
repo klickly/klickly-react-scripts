@@ -326,6 +326,7 @@ module.exports = function(webpackEnv) {
             {
               options: {
                 cache: true,
+                cwd: paths.appPath,
                 formatter: require.resolve('react-dev-utils/eslintFormatter'),
                 eslintPath: require.resolve('eslint'),
                 // @remove-on-eject-begin
