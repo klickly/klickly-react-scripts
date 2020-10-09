@@ -367,6 +367,7 @@ module.exports = function(webpackEnv) {
               options: {
                 limit: 10000,
                 name: 'static/media/[name].[hash:8].[ext]',
+                esModule: false
               },
             },
             // Process application JS with Babel.
